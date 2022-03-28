@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   res.send('hellow world')
-})
+});
 
 !(async function config() {
   try {
