@@ -10,7 +10,7 @@ services:
       - .env
     image: node:latest
     ports:
-      - ${SERVER_PORT}:${SERVER_PORT}
+      - ${PORT}:${PORT}
     restart: always
     working_dir: /usr/src/api
     volumes:

@@ -4,7 +4,7 @@ import express from 'express';
 import cors from 'cors';
 
 const app = express();
-const port = process.env.SERVER_PORT! || 8000;
+const port = process.env.PORT! || 8000;
  
 app.use(cors({ 
   origin:process.env.CLIENT_URL!,
@@ -23,5 +23,5 @@ app.get('/', (req, res) => {
   }
   catch(err:unknown) {
     console.log(err);
-  }
+  } 
 })(); 
