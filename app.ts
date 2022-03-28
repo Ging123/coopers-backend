@@ -1,6 +1,7 @@
 require('dotenv').config();
 import connectMongo from './configs/mongo';
 import bodyParser from 'body-parser';
+import routes from './routes';
 import express from 'express';
 import cors from 'cors';
 
@@ -12,10 +13,7 @@ app.use(cors({
   credentials:true
 }));
 app.use(bodyParser.json());
-
-app.get('/', (req, res) => {
-  res.send('hellow world')
-});
+app.use(routes);
 
 !(async function config() {
   try {

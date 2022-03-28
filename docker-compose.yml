@@ -11,7 +11,7 @@ services:
       - .env
     environment:
       - DB_URL=mongodb://mongo:27017
-    image: node:latest
+    image: node:17-alpine
     links: 
       - mongo
     logging:
@@ -31,7 +31,7 @@ services:
     container_name: mongo
     env_file:
       - .env
-    image: mongo:latest
+    image: mongo:5.0.6
     ports:
       - 27017:27017
     restart: always
