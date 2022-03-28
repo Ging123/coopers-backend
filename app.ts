@@ -1,4 +1,5 @@
 require('dotenv').config();
+import connectMongo from './configs/mongo';
 import bodyParser from 'body-parser';
 import express from 'express';
 import cors from 'cors';
@@ -19,6 +20,7 @@ app.get('/', (req, res) => {
 !(async function config() {
   try {
     const message = `The server start in the port ${port}`;
+    await connectMongo();
     app.listen(port, () => console.log(message));
   }
   catch(err:unknown) {
