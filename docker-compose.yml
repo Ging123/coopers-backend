@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+
+  api:
+    container_name: api
+    depends_on:
+      - mongo
+    env_file:
+      - .env
+    image: node:latest
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    restart: always
+    working_dir: /usr/src/api
+    volumes:
+      - .:/usr/src/api
+      - /usr/src/api/node_modules/
+    
+  mongo:
+    container_name: mongo
+    env_file:
+      - .env
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    restart: always
+    volumes:
+      - ./seed.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
