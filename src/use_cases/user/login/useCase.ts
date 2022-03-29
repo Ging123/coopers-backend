@@ -1,4 +1,3 @@
-import { task } from "../../../models/task.model";
 import exception from "../../../utils/exception";
 import Base from "../../base";
 
@@ -7,9 +6,8 @@ class LoginUseCase extends Base {
   public async login(username:string, password:string) {
     const user = await this.getUser(username);
     await this.verifyIfPasswordMatch(password, user.password);
-    const tasks = await this.getTasks(username);
-    const token = await this.user.login(user, tasks);
-    return this.userData(username, tasks, token);
+    const token = await this.user.login(user);
+    return this.userData(user, token);
   }
 
 
@@ -31,16 +29,10 @@ class LoginUseCase extends Base {
   }
 
 
-  private async getTasks(owner:string):Promise<task[]> {
-    const tasksData = await this.task.findByOwner(owner);
-    return tasksData.tasks;
-  }
-
-
-  private userData(username:string, tasks:task[], token:string) {
+  private userData(user:any, token:string) {
     return {
-      username:username,
-      tasks:tasks,
+      username:user.username,
+      tasks:user.tasks,
       token:token
     }
   }

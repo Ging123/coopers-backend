@@ -1,10 +1,9 @@
 import UserRepo from "../../../repositories/user.repo";
-import TaskRepo from "../../../repositories/task.repo";
 import CreateUserUseCase from "../create/useCase";
+import LogoutUserUseCase from "../logout/useCase";
 import LoginUseCase from "../login/useCase";
 import GetUserByToken from "./useCase";
 import mongoose from "mongoose";
-import LogoutUserUseCase from "../logout/useCase";
 
 const username = 'avvv';
 const password = '123456789';
@@ -12,7 +11,6 @@ const userForTest = { username:username, password:password };
 const token = new GetUserByToken();
 const newUser = new CreateUserUseCase();
 const createdUser = new LoginUseCase();
-const tasks = new TaskRepo();
 const user = new UserRepo();
 var createdToken:string;
 
@@ -26,7 +24,6 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await user.deleteByUsername(username);
-  await tasks.deleteByOwner(username);
   await mongoose.disconnect();
 });
 

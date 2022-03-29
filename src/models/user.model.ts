@@ -22,6 +22,9 @@ class UserModel {
       required:true,
       maxlength:100
     },
+    tasks: {
+      type:Array
+    },
     token: {
       type:String
     }
@@ -37,7 +40,7 @@ class UserModel {
   protected createUser(userData:user) {
     return new this.userModel({
       ...userData,
-      token:''
+      tasks:[]
     });
   }
 }

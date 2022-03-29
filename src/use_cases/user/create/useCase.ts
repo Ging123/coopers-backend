@@ -1,6 +1,6 @@
-import Base from "../../base";
 import { user } from "../../../models/user.model";
 import exception from "../../../utils/exception";
+import Base from "../../base";
 
 class CreateUserUseCase extends Base {
 
@@ -8,7 +8,6 @@ class CreateUserUseCase extends Base {
     await this.validate(userData);
     await this.encryptPassword(userData);
     await this.user.create(userData);
-    await this.task.create(userData.username);
   }
 
 

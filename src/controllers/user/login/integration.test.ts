@@ -1,4 +1,3 @@
-import TaskRepo from "../../../repositories/task.repo";
 import UserRepo from "../../../repositories/user.repo";
 import routes from "../../../../routes";
 import bodyParser from 'body-parser';
@@ -7,7 +6,6 @@ import express from 'express';
 import req from 'supertest';
 
 const userForTest = { username:'billy', password:'123456789' };
-const task = new TaskRepo();
 const user = new UserRepo();
 const app = express();
 
@@ -21,7 +19,6 @@ beforeAll(async () => {
 
 
 afterAll(async () => {
-  await task.deleteByOwner(userForTest.username);
   await user.deleteByUsername(userForTest.username);
   await mongoose.disconnect();
 });
