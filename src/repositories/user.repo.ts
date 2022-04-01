@@ -49,24 +49,34 @@ class UserRepo extends UserModel {
 
   public async editTask(user:any, taskIndex:number, text:string, listName:string, 
   checked=false) {
-    const updatedTasks = [...user.tasks];
-    updatedTasks[taskIndex].text = text;
-    updatedTasks[taskIndex].listName = listName;
-    updatedTasks[taskIndex].checked = checked;
-    await this.userModel.updateOne({ username:user.username },
-    { $set:{ tasks:updatedTasks } });
+    let count = 0;
+    for(let i = 0; i < user.tasks.length; i++) {
+      if(user.tasks[i].listName === listName) {
+        if(count === taskIndex) {
+          user.tasks[i].text = text;
+          user.tasks[i].listName = listName;
+          user.tasks[i].checked = checked;
+          await this.userModel.updateOne({ username:user.username },
+          { $set:{ tasks:user.tasks } });
+          break;
+        }
+        count++
+      }
+    }
   }
 
 
   public async swapTaskFromList(user:any, indexOfTask:number, oldList:string, 
   newList:string) {
+    let count = 0;
     for(let i = 0; i < user.tasks.length; i++) {
       if(user.tasks[i].listName === oldList) {
-        if(i === indexOfTask) {
+        if(count === indexOfTask) {
           user.tasks[i].listName = newList;
           await this.updateWhatListTaskIs(user);
           break;
         }
+        count++
       }
     }
   }

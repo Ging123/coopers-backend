@@ -58,17 +58,6 @@ test("Test: Mark a task", async () => {
 });
 
 
-test("Test: Send task index that doesn't exist", async () => {
-  const taskDoesntExist = "This task doesn't exist";
-  const res = await req(app)
-    .put("/task/20")
-    .set("Authorization", token)
-    .send({ text:"ok", listName:"done", checked:true })
-  expect(res.status).toBe(400);
-  expect(res.body).toBe(taskDoesntExist);
-});
-
-
 describe("Test errors in text", () => {
 
   test("Test: Empty text", async () => {
