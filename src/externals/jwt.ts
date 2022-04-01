@@ -6,15 +6,15 @@ class Jwt {
   private secretKeyOfToken:string;
   private expireIn:string;
   
-  constructor(secretKeyOfToken:string, expireIn='60m') {
+  constructor(secretKeyOfToken:string, expireIn='24h') {
     this.secretKeyOfToken = secretKeyOfToken;
     this.expireIn = expireIn;
   }
 
 
   public create(data:object) {
-    const expireTime = { expiresIn:this.expireIn };
-    const token = jwt.sign(data, this.secretKeyOfToken, expireTime);
+    //const expireTime = { expiresIn:this.expireIn };
+    const token = jwt.sign(data, this.secretKeyOfToken);
     return token;
   }
 

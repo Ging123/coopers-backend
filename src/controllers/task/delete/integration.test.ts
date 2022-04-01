@@ -28,17 +28,14 @@ afterAll(async () => {
 });
 
 
-test("Test: delete a task that doesnt exists", async () => {
-  const taskDoenstExists = "Task doesn't exists";
-  const res = await req(app).delete("/task/29").set("Authorization", token);
-  expect(res.status).toBe(400);
-  expect(res.body).toBe(taskDoenstExists);
-});
-
-
 test("Test: delete a task", async () => {
-  let res = await req(app).delete("/task/0").set("Authorization", token);
+  let res = await req(app)
+    .delete("/task/0")
+    .send({listName:"do"})  
+    .set("Authorization", token);
   expect(res.status).toBe(204);
-  res = await req(app).get("/user").set("Authorization", token);
+  res = await req(app)
+    .get("/user")
+    .set("Authorization", token);
   expect(res.body.tasks.length).toBe(0);
 });

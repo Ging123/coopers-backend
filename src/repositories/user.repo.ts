@@ -58,21 +58,36 @@ class UserRepo extends UserModel {
   }
 
 
-  public async deleteTask(user:any, taskIndex:number) {
-    let updatedTask = [], removed = false;
+  public async swapTaskFromList(user:any, indexOfTask:number, oldList:string, 
+  newList:string) {
     for(let i = 0; i < user.tasks.length; i++) {
-      if(i !== taskIndex) updatedTask.push(user.tasks[i]);
-      else removed = true;
+      if(user.tasks[i].listName === oldList) {
+        if(i === indexOfTask) {
+          user.tasks[i].listName = newList;
+          await this.updateWhatListTaskIs(user);
+          break;
+        }
+      }
     }
-    if(!removed) throw exception("Task doesn't exists");
-    user.tasks = updatedTask;
+  }
+
+
+  private async updateWhatListTaskIs(user:any) {
+    await this.userModel.updateOne({ username:user.username }, {
+      $set: { tasks:user.tasks }
+    })
+  }
+
+
+  public async deleteTask(user:any, updatedList:any[]) {
+    user.tasks = updatedList;
     await user.save();
     return user;
   }
 
 
-  public async deleteAllTasks(user:any) {
-    user.tasks = [];
+  public async deleteAllTasks(user:any, updatedList:any[]) {
+    user.tasks = [...updatedList];
     await user.save();
     return user;
   }

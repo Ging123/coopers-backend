@@ -8,7 +8,8 @@ const task = new DeleteAllTasksUseCase();
 
 route.delete('/', authUser ,async (req:any, res) => {
   try {
-    await task.deleteAll(req.user);
+    const { listName } = req.body;
+    await task.deleteAll(req.user, listName);
     res.status(204).send();
   }
   catch(err) {

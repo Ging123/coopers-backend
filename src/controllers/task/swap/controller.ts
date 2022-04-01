@@ -1,17 +1,22 @@
+import SwapTaskFromListsUseCase from '../../../use_cases/task/swap/useCase';
 import { verifyIfIsAnInternalException } from '../../../utils/exception';
-import DeleteTaskUseCase from '../../../use_cases/task/delete/useCase';
 import authUser from '../../../middlewares/authUser';
 import express from 'express';
 
 const route = express.Router();
-const task = new DeleteTaskUseCase();
+const task = new SwapTaskFromListsUseCase();
 
-route.delete('/:index', authUser ,async (req:any, res) => {
+route.put('/swap/:index', authUser ,async (req:any, res) => {
   try {
     const { index } = req.params;
-    const { listName } = req.body;
-    await task.deleteOne(req.user, parseInt(index), listName);
-    res.status(204).send();
+    const { oldList, newList } = req.body;
+    await task.swapFromList(
+      req.user,
+      parseInt(index),
+      oldList,
+      newList
+    );
+    res.status(200).send();
   }
   catch(err) {
     const error = verifyIfIsAnInternalException(err);
